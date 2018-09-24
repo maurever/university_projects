@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="wpa_sam2" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>org.wpa.BO.District</class>
+    <class>org.wpa.BO.Lobbyist</class>
+    <class>org.wpa.BO.Person</class>
+    <class>org.wpa.BO.Rank</class>
+    <class>org.wpa.BO.Manager</class>
+    <class>org.wpa.BO.ParticipationId</class>
+    <class>org.wpa.BO.Journalist</class>
+    <class>org.wpa.BO.Fraction</class>
+    <class>org.wpa.BO.Deputy</class>
+    <class>org.wpa.BO.Organization</class>
+    <class>org.wpa.BO.Year</class>
+    <class>org.wpa.BO.Management</class>
+    <class>org.wpa.BO.School</class>
+    <class>org.wpa.BO.ManagementId</class>
+    <class>org.wpa.BO.Participation</class>
+    <class>org.wpa.BO.Competency</class>
+    <class>org.wpa.BO.Senator</class>
+    <class>org.wpa.BO.Committe</class>
+    <class>org.wpa.BO.PoliticalParty</class>
+    <class>org.wpa.BO.State</class>
+    <class>org.wpa.managedBeans.userManagement.RegisterManager</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://krizik.felk.cvut.cz:5434/wpa2013zs_102_3"/>
+      <property name="javax.persistence.jdbc.password" value="heslo_wpa2013zs_102_3"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="wpa2013zs_102_3"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>

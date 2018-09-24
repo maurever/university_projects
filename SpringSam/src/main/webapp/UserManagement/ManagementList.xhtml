@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Organizuje</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+        #{managementList.load(param.id)}
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h3>Seznam Rízení Organizátora </h3>
+            <h:dataTable value="#{managementList.managements}" var="managementItem" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Rok
+                    </f:facet>
+                    #{managementItem.yearDto.year}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Uživatel
+                    </f:facet>
+                    #{managementItem.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Politická strana
+                    </f:facet>
+                    #{managementItem.politicalParty.politicalartyName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Komise
+                    </f:facet>
+                    #{managementItem.committeDto.committeName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Stát
+                    </f:facet>
+                    #{managementItem.stateDto.stateName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Rank
+                    </f:facet>
+                    #{managementItem.rankDto.rankName}
+                </h:column>
+            </h:dataTable>
+            <h:form>
+                <h:link class="a_button" value="Nový" outcome="/UserManagement/Management.xhtml">
+                    <f:param name="id" value="#{managementList.id}"/>
+                </h:link>
+            </h:form>
+        </div>
+    </h:body>
+    
+</ui:composition>
+

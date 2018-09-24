@@ -1,0 +1,13 @@
+Tady jen abychom se vyznali v ty sessionMap protože jede na Object a nema generika.
+
+FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+
+Testovaci SMTP a  GMAO:
+email.sam.test@gmail.com        pokus1234
+SMTP Server: smtpcorp.com
+SMTP Port: 2525 (recommended)
+
+
+Admin email:    admin@admin.com       heslo: admin
+
+Key                 Class

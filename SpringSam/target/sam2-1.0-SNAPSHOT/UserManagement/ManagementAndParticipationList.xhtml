@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <title>Seznam organizování a účati</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body rendered="#{managAndParticList.hasActiveYear()}">
+        <div id="content">
+            <h3>Seznam Organizování a účastí</h3>
+            <h:form id="form">
+                <h:selectBooleanCheckbox id="notLimited" rendered="#{managAndParticList.allovedToViewAll}" label="Neomezovat se na jednoho uzivatele" value="#{managAndParticList.notLimited}">
+                    <a4j:ajax event="valueChange" onbeforedomupdate="#{managAndParticList.loadActiveYears()}" render="all" execute="@form"/>
+                </h:selectBooleanCheckbox>
+                <h:outputLabel rendered="#{managAndParticList.allovedToViewAll}" for="notLimited">Neomezovat se na jednoho uzivatele</h:outputLabel>
+                <a4j:outputPanel id="all">
+                    <br/>
+                    <h:outputLabel for="year">Aktivní roky:</h:outputLabel>
+                    <h:selectOneMenu class="select-one-menu" style="width: 60px" id="year" value="#{managAndParticList.selectedYear}">
+                        <f:selectItem itemLabel=""/>
+                        <f:selectItems value="#{managAndParticList.activeYears}" var="year" itemValue="#{year}" itemLabel="#{year}" />
+                        <a4j:ajax event="valueChange" onbeforedomupdate="#{managAndParticList.loadFilter()}" render="allButYear" execute="@form"/>
+                    </h:selectOneMenu>
+                    <a4j:outputPanel id="allButYear">
+                        <br/>
+                           <h:outputLabel for="filter">Filtrovat polde:</h:outputLabel>
+                                <h:selectOneMenu  rendered="#{not empty managAndParticList.filterBy}" class="select-one-menu" id="filter" value="#{managAndParticList.selectedFilter}">
+                            <f:selectItem itemLabel=""/>
+                            <f:selectItems value="#{managAndParticList.filterBy}" var="filter" itemValue="#{filter}" itemLabel="#{filter}" />
+                            <a4j:ajax event="valueChange" onbeforedomupdate="#{managAndParticList.applyFilter()}" render="onlyMarginals" execute="@form"/>
+                        </h:selectOneMenu>
+                        <a4j:outputPanel id="onlyMarginals">
+                            <br/>
+                            <h:outputLabel rendered="#{managAndParticList.notLimited}" for="marginal">Hledat v:</h:outputLabel>
+                            <h:selectOneMenu class="select-one-menu" id="marginal" rendered="#{managAndParticList.notLimited}" value="#{managAndParticList.selectedMarginal}">
+                                <f:selectItem itemLabel=""/>
+                                <f:selectItems value="#{managAndParticList.marginalFilter}" var="marginal" itemValue="#{marginal}" itemLabel="#{marginal}" />
+                                <a4j:ajax event="valueChange" onbeforedomupdate="#{managAndParticList.applyGlobalFilter}" render="onlyMarginals" execute="@form"/>
+                            </h:selectOneMenu>
+                        </a4j:outputPanel>
+                        </a4j:outputPanel>
+                    <h:commandButton rendered="#{!managAndParticList.notLimited}" class="a_button" value="Použít" action="#{managAndParticList.applyFilter()}"/>
+                    <h:commandButton rendered="#{managAndParticList.notLimited}" class="a_button" value="Použít" action="#{managAndParticList.applyGlobalFilter()}"/>
+                    </a4j:outputPanel>
+            </h:form>
+        </div>
+        <h:panelGroup layout="block" class="content" rendered="#{managAndParticList.managementDtosSet}">
+            <h3>Seznam Organizátorů</h3>
+            <h:dataTable value="#{managAndParticList.managementDtos}" var="manager" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{manager.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Jméno
+                    </f:facet>
+                    #{manager.personDTO.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Přijmění
+                    </f:facet>
+                    #{manager.personDTO.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Stát
+                    </f:facet>
+                    #{manager.stateDto.stateName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Strana
+                    </f:facet>
+                    #{manager.politicalParty.politicalartyName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Komise
+                    </f:facet>
+                    #{manager.committeDto.committeName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Hodnost
+                    </f:facet>
+                    #{manager.rankDto.rankName}
+                </h:column>
+
+            </h:dataTable>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="content" rendered="#{managAndParticList.senatorDtosSet}">
+            <h3>Seznam Senátorů</h3>
+            <h:dataTable value="#{managAndParticList.senatorDtos}" var="senator" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{senator.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Jméno
+                    </f:facet>
+                    #{senator.personDTO.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Přijmění
+                    </f:facet>
+                    #{senator.personDTO.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Stát
+                    </f:facet>
+                    #{senator.stateDto.stateName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Strana
+                    </f:facet>
+                    #{senator.fractionDto.politicalPartyDto.politicalartyName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Frakce
+                    </f:facet>
+                    #{senator.fractionDto.fractionName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Komise
+                    </f:facet>
+                    #{senator.commiteDto.committeName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Distrikt
+                    </f:facet>
+                    #{senator.districtDto.districtName}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="content" rendered="#{managAndParticList.deputyDtosSet}">
+            <h3>Seznam Poslanců</h3>
+            <h:dataTable value="#{managAndParticList.deputyDtos}" var="deputy" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{deputy.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Jméno
+                    </f:facet>
+                    #{deputy.personDTO.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Přijmění
+                    </f:facet>
+                    #{deputy.personDTO.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Stát
+                    </f:facet>
+                    #{deputy.stateDto.stateName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Strana
+                    </f:facet>
+                    #{deputy.fractionDto.politicalPartyDto.politicalartyName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Frakce
+                    </f:facet>
+                    #{deputy.fractionDto.fractionName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Komise
+                    </f:facet>
+                    #{deputy.commiteDto.committeName}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="content" rendered="#{managAndParticList.journalistDtosSet}">
+            <h3>Seznam Novinářů</h3>
+            <h:dataTable value="#{managAndParticList.journalistDtos}" var="journalist" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{journalist.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Jméno
+                    </f:facet>
+                    #{journalist.personDTO.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Přijmění
+                    </f:facet>
+                    #{journalist.personDTO.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Organizace
+                    </f:facet>
+                    #{journalist.organizationDto.organizationName}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="content" rendered="#{managAndParticList.lobbyistDtosSet}">
+            <h3>Seznam Lobbistů</h3>
+            <h:dataTable value="#{managAndParticList.lobbyistDtos}" var="lobbyist" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{lobbyist.personDTO.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Jméno
+                    </f:facet>
+                    #{lobbyist.personDTO.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Přijmění
+                    </f:facet>
+                    #{lobbyist.personDTO.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Organizace
+                    </f:facet>
+                    #{lobbyist.organizationDto.organizationName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Komise
+                    </f:facet>
+                    #{lobbyist.committeDto.committeName}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+    </h:body>
+    <h:body rendered="#{!managAndParticList.hasActiveYear()}">
+        <div class="content">
+            <h3>Tento uzivatel nemá žádnou účast ani nic neorganizuje</h3>
+
+        </div>
+    </h:body>
+</ui:composition>
+

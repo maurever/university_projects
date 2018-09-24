@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Seznam uživatelů</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h3>Seznam uživatelů</h3>
+            <h:dataTable value="#{personListBean.orderList}" var="user" 
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column>
+                    <f:facet name="header">
+                        <h:link class="a_table" value="ID" outcome="/UserManagement/PersonList.xhtml">
+                            <f:param name="orderBy" value="id" />
+                            <f:param name="inOrder" value="#{personListBean.order}" />
+                        </h:link>
+                    </f:facet>
+                    #{user.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:link class="a_table" value="jméno" outcome="/UserManagement/PersonList.xhtml">
+                            <f:param name="orderBy" value="firstName" />
+                            <f:param name="inOrder" value="#{personListBean.order}" />
+                        </h:link>
+                    </f:facet>
+                    #{user.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:link class="a_table" value="příjmení" outcome="/UserManagement/PersonList.xhtml">
+                            <f:param name="orderBy" value="lastName" />
+                            <f:param name="inOrder" value="#{personListBean.order}" />
+                        </h:link>
+                    </f:facet>
+                    #{user.lastName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:link class="a_table" value="e-mail" outcome="/UserManagement/PersonList.xhtml">
+                            <f:param name="orderBy" value="email" />
+                            <f:param name="inOrder" value="#{personListBean.order}" />
+                        </h:link>
+                    </f:facet>
+                    #{user.email}
+                </h:column>
+                <h:column rendered="#{alterUser.permitedToShowAlteringColumns}">
+                     <f:facet name="header">úpravy</f:facet>
+                     <h:link rendered="#{user.permitedToShowAlteringButtons}" class="a_table" value="upravit" outcome="AlterUser.xhtml">
+                         <f:param name="id" value="#{user.id}" />
+                     </h:link>
+                 </h:column>
+                <h:column rendered="#{alterUser.permitedToShowAlteringColumns}">
+                     <f:facet name="header">Smazat</f:facet>
+                     <h:form>
+                     <h:commandLink rendered="#{user.permitedToShowAlteringButtons}" class="a_table" onclick="return confirm('Opravdu chcete tohoto uzivatele smazat?')" value="Smazat" action="#{alterUser.deleteUser(user.id)}">
+                         <f:param name="orderBy" value="#{personListBean.orderBy}" />
+                         <f:param name="inOrder" value="#{personListBean.inOrder}" />
+                     </h:commandLink>
+                         </h:form>
+                 </h:column>
+                
+            </h:dataTable>
+            <h:form>
+                <h:commandButton id="backButton" class="a_button" value="Zpět" action="/index.xhtml?faces-redirect=true"/> 
+            </h:form>
+        </div>
+    </h:body>
+    
+</html>
+

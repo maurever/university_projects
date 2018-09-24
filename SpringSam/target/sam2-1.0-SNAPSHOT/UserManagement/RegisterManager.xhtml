@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Vytvoření Orgaizátora</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h3>Nový Organizátor</h3>
+            <div id="form">
+                <h:form>
+                    <div class="table_label"><h:outputLabel for="email">e-mail:</h:outputLabel></div><h:inputText size="40" id="email" value="#{registerManager.email}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="firstName">jméno:</h:outputLabel></div><h:inputText size="40" id="firstName" value="#{registerManager.firstName}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="lastName">příjmení:</h:outputLabel></div><h:inputText size="40" id="lastName" value="#{registerManager.lastName}"/> <br/>
+                    <p>Všechny údaje jsou povinné.</p>
+                    <h:dataTable value="#{registerManager.competencies}" var="competency" 
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header">
+                                Vyber
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{competency.selected}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                ID
+                            </f:facet>
+                            #{competency.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Jméno
+                            </f:facet>
+                            #{competency.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Popis
+                            </f:facet>
+                            #{competency.description}
+                        </h:column>
+
+                    </h:dataTable>
+
+                    <h:commandButton id="registerButton" class="a_button" value="Registrovat" action="#{registerManager.register()}"/> 
+                    <h:commandButton id="backButton" class="a_button" value="Zpět" action="/index.xhtml?faces-redirect=true"/> 
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Poslat přihlášku</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h2>Pošlete přihlášku pro aktuální ročník #{registerParticipation.openedYearString}.</h2>
+            <h:form id="newParticipation">
+                <!-- School -->
+                <h:selectOneMenu value="#{registerParticipation.participation.schoolDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte školu --"/>
+                    <f:selectItems value="#{registerParticipation.availableSchool}" var="school" itemValue="#{school}" itemLabel="#{school.schoolName}, #{school.street} #{school.streetCode}, #{school.postalCode}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <h:commandButton class="a_table" value="Přidat novou školu">
+                    <rich:componentControl target="newSchool" operation="show" />
+                </h:commandButton>
+                <br /> <!-- Role -->
+                <h:selectOneMenu value="#{registerParticipation.role}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte roli --"/>
+                    <f:selectItems value="#{registerParticipation.allTypeParticipation}" var="role" itemValue="#{role}" itemLabel="#{role.role}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br /> <!-- Journalist -->
+                <h:selectOneMenu value="#{registerParticipation.journalist.organizationDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte organizaci --"/>
+                    <f:selectItems value="#{registerParticipation.availableJournalistOrganizations}" var="organization" itemValue="#{organization}" itemLabel="#{organization.organizationName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <h:commandButton class="a_table" value="Nová organizace">
+                    <rich:componentControl target="newOrganizationJournalist" operation="show" />
+                </h:commandButton>
+                <br /><!-- Lobbyist -->
+                <h:selectOneMenu value="#{registerParticipation.lobbyist.organizationDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte oragnizaci --"/>
+                    <f:selectItems value="#{registerParticipation.availableLobbyistOrganizations}" var="organization" itemValue="#{organization}" itemLabel="#{organization.organizationName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <h:commandButton class="a_table" value="Nová organizace">
+                    <rich:componentControl target="newOrganizationLobbyist" operation="show" />
+                </h:commandButton>
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.lobbyist.committeDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte výbor --"/>
+                    <f:selectItems value="#{registerParticipation.availableLobbyistCommittes}" var="committe" itemValue="#{committe}" itemLabel="#{committe.committeName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br /><!-- Deputy -->
+                <h:selectOneMenu value="#{registerParticipation.deputy.commiteDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte výbor --"/>
+                    <f:selectItems value="#{registerParticipation.availableDeputyCommittes}" var="committe" itemValue="#{committe}" itemLabel="#{committe.committeName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.deputy.fractionDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte frakci --"/>
+                    <f:selectItems value="#{registerParticipation.availableDeputyFractions}" var="fraction" itemValue="#{fraction}" itemLabel="#{fraction.fractionName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.deputy.stateDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte stát --"/>
+                    <f:selectItems value="#{registerParticipation.availableDeputyStates}" var="state" itemValue="#{state}" itemLabel="#{state.stateName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <br /><!-- Senator -->
+                <h:selectOneMenu value="#{registerParticipation.senator.commiteDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte výbor --"/>
+                    <f:selectItems value="#{registerParticipation.availableSenatorCommittes}" var="committe" itemValue="#{committe}" itemLabel="#{committe.committeName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.senator.fractionDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte frakci --"/>
+                    <f:selectItems value="#{registerParticipation.availableSenatorFractions}" var="fraction" itemValue="#{fraction}" itemLabel="#{fraction.fractionName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.senator.districtDto}">
+                    <f:selectItem value="#{null}" itemLabel="-- Vyberte distrikt --"/>
+                    <f:selectItems value="#{registerParticipation.availableDistricts}" var="district" itemValue="#{district}" itemLabel="#{district.districtName}" />
+                    <f:converter converterId="universalConverter" />
+                </h:selectOneMenu>
+                <br />
+                <br />
+                <h:selectOneMenu value="#{registerParticipation.currentType}" valueChangeListener="#{registerParticipation.valueChanged}">
+                    <f:selectItems value="#{registerParticipation.firstList}" />
+                    <a4j:ajax event="valueChange" render="second" execute="@this" />
+                </h:selectOneMenu>
+                <a4j:outputPanel id="second" layout="block">
+                    <h:selectOneMenu value="#{registerParticipation.currentType}" rendered="#{not empty registerParticipation.currentType}">
+                        <f:selectItems value="#{registerParticipation.secondList}" />
+                    </h:selectOneMenu>
+                </a4j:outputPanel>
+                <a4j:outputPanel id="third" layout="block">
+                    <h:selectOneMenu value="#{registerParticipation.currentType}" rendered="#{not empty registerParticipation.currentType}">
+                        <f:selectItems value="#{registerParticipation.secondList}" />
+                    </h:selectOneMenu>
+                </a4j:outputPanel>
+                <br />
+                <br />
+                <!-- Submit -->
+                <h:commandButton onclick="return confirm('Opravdu chcete uložit změny?')" id="registerButton" class="a_button" value="Uložit" action="#{registerParticipation.register()}">
+                    <f:param name="id" value="#{param.id}"/>
+                </h:commandButton>
+            </h:form>
+        </div>
+    </h:body>
+    <!-- New School popup --> 
+    <rich:popupPanel id="newSchool" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nová škola" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newSchool')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newschool">
+            <div class="table_label">
+                <h:outputLabel for="schoolName">Název školy</h:outputLabel>
+                <h:inputText size="40" id="schoolName" value="#{registerParticipation.newSchool.schoolName}" /> 
+                <br />
+                <h:outputLabel for="schoolStreet">Ulice:</h:outputLabel>
+                <h:inputText size="40" id="schoolStreet" value="#{registerParticipation.newSchool.street}" /> 
+                <br />
+                <h:outputLabel for="schoolStreetNumber">Číslo popisné:</h:outputLabel>
+                <h:inputText size="40" id="schoolStreetNumber" value="#{registerParticipation.newSchool.streetCode}" /> 
+                <br />
+                <h:outputLabel for="schoolCity">Město:</h:outputLabel>
+                <h:inputText size="40" id="schoolCity" value="#{registerParticipation.newSchool.city}" /> 
+                <br />
+                <h:outputLabel for="schoolPostalCode">PSČ: (ve tvaru 12345)</h:outputLabel>
+                <h:inputText size="40" id="schoolPostalCode" value="#{registerParticipation.newSchool.postalCode}" /> 
+                <br />
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{registerParticipation.newSchool()}">
+                <f:param id="id" value="#{param.id}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+    <!-- New Journalist organization popup --> 
+    <rich:popupPanel id="newJournalistOrganization" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nová organizace" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newJournalistOrganization')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newJournalistOrganization">
+            <div class="table_label">
+                <h:outputLabel for="organizationName">Jméno organizace:</h:outputLabel>
+                <h:inputText size="40" id="organizationName" value="#{registerParticipation.newJournalistOrganization.organizationName}" /> 
+                <br />
+                <h:outputLabel for="organizationDescription">Popis organizace:</h:outputLabel>
+                <h:inputTextarea id="organizationDecription" value="#{registerParticipation.newJournalistOrganization.description}" /> 
+
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{registerParticipation.newJournalistOrganization()}">
+                <f:param id="id" value="#{param.id}"/>
+                <f:param id="year" value="#{param.year}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+    <!-- New Lobbyist organization popup --> 
+    <rich:popupPanel id="newLobbyistOrganization" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nová organizace" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newOrganization')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newLobbyistOrganization">
+            <div class="table_label">
+                <h:outputLabel for="organizationName">Jméno organizace:</h:outputLabel>
+                <h:inputText size="40" id="organizationName" value="#{registerParticipation.newLobbyistOrganization.organizationName}" /> 
+                <br />
+                <h:outputLabel for="organizationDescription">Popis organizace:</h:outputLabel>
+                <h:inputTextarea id="organizationDecription" value="#{registerParticipation.newLobbyistOrganization.description}" /> 
+
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{registerParticipation.newLobbyistOrganization()}">
+                <f:param id="id" value="#{param.id}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+</ui:composition>
+

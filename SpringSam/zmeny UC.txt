@@ -1,0 +1,52 @@
+Změny UC
+- přidán nový UC ke správě prezence
+
+Dodělat
+Stavové diagramy
+- do [podmínka přechodu stavu]
+- za / efekt, akce - co se spouští na pozadí změny
+-> nemusí být vždy uvedeno
+- joice vs. junction
+- choice - K. doporučuje nepoužívat, má význam pouze pokud všude stejné východisko
+- junction -pouze pro zpřehlednění paralelně vedoucích šipek.
+
+Stav přihlášky
+Stav registrace
+Stav ročníku
+
+Sekvenční diagramy
+
+UC očíslovat
+
+Odstranění přihlášky    done
+Uživatel odstraní nekorektní přihlášku.
+
+Potvrzení přihlášky    done
+Uživatel potvrdí správnou přihlášku a potvrzením systém vytvoří účet a odešle na
+zadaný e-mail přihlašovací údaje.
+
+Záloha dat            done
+Uživatel zazálohuje data na externí medium.
+
+Zobrazení účastníků stejné role     done
+Systém bude uživateli umožňovat zobrazení uživatelů, kteří mají stejnou roli.
+
+Zaznamenání přítomnosti     done
+Uživatel zaznamená v seznamu prezenci jednotlivých uživatelů.
+
+Zobrazení prezence účastníků    done
+Uživatel si zobrazí aktuální seznam účastníků a jejich prezence konference.
+
+Zobrazení vlastní prezence       done
+Uživatel zobrazí vlastní prezenci. 
+
+Vytvoření prezenčního listu.
+
+Zpětná vazba k USI
+účel sch. 5
+nejasný požadavek č. 12
+UC - 1.2.1
+   - export
+   
+I. terace Vize 3 body
+II. iterace 8 bodů

@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Organizace</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h:form id="newManagement" >
+                <table align="center">
+                    <tr>
+                        <td align="right"><h:outputLabel for="year">Rok:</h:outputLabel></td>
+                        <td><h:selectOneMenu class="select-one-menu" id="year" value="#{management.management.yearDto}" onchange="submit()">
+                                <f:selectItem value="#{null}" itemLabel="-- Vyberte jeden --"/>
+                                <f:selectItems value="#{management.avaidableYears}" var="year" itemValue="#{year}" itemLabel="#{year.year}" />
+                                <f:converter converterId="universalConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputLabel for="politicalParty">Politická strana:</h:outputLabel>
+                        </td>
+                        <td>
+                            <h:selectOneMenu class="select-one-menu" id="politicalParty" value="#{management.management.politicalParty}" onchange="submit()">
+                                <f:selectItem value="#{null}" itemLabel="-- Vyberte jedenu --"/>
+                                <f:selectItems value="#{management.avaidablePoliticalParties}" var="party" itemValue="#{party}" itemLabel="#{party.politicalartyName}" />
+                                <f:converter converterId="universalConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                        <td>
+                            <h:commandButton class="a_table" value="Nová Strana">
+                                <rich:componentControl target="newParty" operation="show" />
+                            </h:commandButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputLabel for="committe">Výbor:</h:outputLabel>
+                        </td><td>
+                            <h:selectOneMenu class="select-one-menu" id="committe" value="#{management.management.committeDto}" onchange="submit()">
+                                <f:selectItem value="#{null}" itemLabel="-- Vyberte jedenu --"/>
+                                <f:selectItems value="#{management.avaidableCommittes}" var="committe" itemValue="#{committe}" itemLabel="#{committe.committeName}" />
+                                <f:converter converterId="universalConverter" />
+                            </h:selectOneMenu></td><td>
+                            <h:commandButton class="a_table" value="Nový výbor">
+                                <rich:componentControl target="newCommitte" operation="show" />
+                            </h:commandButton></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputLabel for="state">Stát:</h:outputLabel>
+                        </td><td>
+                            <h:selectOneMenu class="select-one-menu" id="state" value="#{management.management.stateDto}" onchange="submit()">
+                                <f:selectItem value="#{null}" itemLabel="-- Vyberte jeden --"/>
+                                <f:selectItems value="#{management.avaidableStates}" var="state" itemValue="#{state}" itemLabel="#{state.stateName}" />
+                                <f:converter converterId="universalConverter" />
+                            </h:selectOneMenu></td><td>
+                            <h:commandButton class="a_table" value="Nový stát">
+                                <rich:componentControl target="newState" operation="show" />
+                            </h:commandButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <h:outputLabel for="rank">Hodnost:</h:outputLabel>
+                        </td><td>
+                            <h:selectOneMenu class="select-one-menu" id="rank" value="#{management.management.rankDto}" onchange="submit()">
+                                <f:selectItem value="#{null}" itemLabel="-- Vyberte jeden --"/>
+                                <f:selectItems value="#{management.avaidableRanks}" var="rank" itemValue="#{rank}" itemLabel="#{rank.rankName}" />
+                                <f:converter converterId="universalConverter" />
+                            </h:selectOneMenu>
+                        </td><td></td>
+                    </tr>
+                </table>
+                <h:commandButton onclick="return confirm('Opravdu chcete uložit změny?')" id="registerButton" class="a_button" value="Uložit" action="#{management.save()}">
+                    <f:param name="id" value="#{param.id}"/>
+                </h:commandButton>
+            </h:form>
+        </div>
+    </h:body>
+
+
+    <rich:popupPanel id="newParty" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nová politická strana" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newParty')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newparty">
+            <div class="table_label">
+                <h:outputLabel for="partyName">Jméno Strany:</h:outputLabel>
+                <h:inputText  size="40" id="partyName" value="#{management.newPoliticalPartyName}" /> 
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{management.newParty()}">
+                <f:param id="id" value="#{param.id}"/>
+                <f:param id="year" value="#{param.year}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+    <rich:popupPanel id="newCommitte" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nový výbor" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newCommitte')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newcommitte">
+            <div class="table_label">
+                <h:outputLabel for="committeName">Jméno Výboru:</h:outputLabel>
+                <h:inputText  size="40" id="committeName" value="#{management.newCommitteName}" /> 
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{management.newCommitte()}">
+                <f:param id="id" value="#{param.id}"/>
+                <f:param id="year" value="#{param.year}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+    <rich:popupPanel id="newState" modal="true" resizeable="true" >
+        <f:facet name="header">
+            <h:outputText value="Nový Stát" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('newState')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="newstate">
+            <div class="table_label">
+                <h:outputLabel for="stateName">Jmeno Státu:</h:outputLabel>
+                <h:inputText  size="40" id="stateName" value="#{management.newStateName}" /> 
+            </div>
+            <h:commandButton id="registerButton" class="a_button" value="Uložit" action="#{management.newState()}">
+                <f:param id="id" value="#{param.id}"/>
+                <f:param id="year" value="#{param.year}"/>
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+</ui:composition>
+

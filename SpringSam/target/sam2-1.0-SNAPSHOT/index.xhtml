@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      >
+    <h:head>
+        <title>Projekt SAM</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h3>Vítejte!</h3><br/>
+            <h:link rendered="#{loginAndLogout.loggedIn}" class="a_button" value="Filtr" outcome="/UserManagement/ManagementAndParticipationList.xhtml"/><br/>
+            <h:link rendered="#{authenticator.isAlowed(1)}" class="a_button" value="Seznam uživatelů" outcome="/UserManagement/PersonList.xhtml"/><br/>
+            <h:link class="a_button" value="Registrace Účastníka" outcome="/UserManagement/RegisterParticipant.xhtml"/><br/>
+            <h:link rendered="#{registerManager.loggedIn}" class="a_button" value="Registrace Organizátora" outcome="/UserManagement/RegisterManager.xhtml"/><br/>
+            <h:link rendered="#{loginAndLogout.loggedIn}" class="a_button" value="Můj Profil" outcome="/UserManagement/AlterUser.xhtml"/><br/>
+            <h:link rendered="#{authenticator.currentUser.manager}" class="a_button" value="Přihlásit se do ročníku" outcome="/UserManagement/RegisterParticipation.xhtml"/><br/>
+            <h:link rendered="#{!loginAndLogout.loggedIn}" class="a_button" value="Prihlášení" outcome="/UserManagement/LoginAndLogout.xhtml"/><br/>
+            <h:link rendered="#{loginAndLogout.loggedIn}" class="a_button" value="Odhlásit" outcome="/UserManagement/LoginAndLogout.xhtml"/><br/>
+        </div>
+    </h:body>
+</html>
+

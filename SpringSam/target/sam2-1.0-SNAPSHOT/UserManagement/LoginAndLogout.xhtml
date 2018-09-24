@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Přihlásit nebo odhlásit</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+    </h:head> 
+    <h:body>
+        <div id="content">
+            <div id="form">
+                <h:form id="loginForm" prependId="false">
+                    <h:messages globalOnly="true"/>
+                    <h:panelGroup layout="block" rendered="#{!loginAndLogout.loggedIn}">
+                        <div class="table_label"><h:outputLabel for="j_username" value="E-mail: " /></div>  
+                        <h:inputText id="j_username" required="true" label="username" />  
+                        <h:message for="j_username"  style="color:red"/><br/>
+                        <div class="table_label"><h:outputLabel for="j_password" value="Heslo: " /> </div>
+                        <h:inputSecret id="j_password" label="password" required="true" />  
+                        <h:message for="j_password"  style="color:red"/><br/>
+                    </h:panelGroup>
+                    <h:commandButton class="a_button" value="Přihlásit" action="#{loginAndLogout.login}" rendered="#{!loginAndLogout.loggedIn}"/>
+                    <h:commandButton class="a_button" value="Odhlásit" action="#{loginAndLogout.logout}" rendered="#{loginAndLogout.loggedIn}"/>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+

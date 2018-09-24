@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Upravit uživatele</title>
+        <h:outputStylesheet library="resources" name="sam_css.css"  />
+        #{alterUser.load(param.id)}
+    </h:head>
+    <h:body>
+        <div id="content">
+            <h3>Registrace</h3>
+            <div id="form">
+                <h:form>
+                    <div class="table_label"><h:outputLabel for="email">e-mail:</h:outputLabel></div><h:inputText size="40" id="email" value="#{alterUser.email}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="firstName">jméno:</h:outputLabel></div><h:inputText size="40" id="firstName" value="#{alterUser.firstName}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="lastName">příjmení:</h:outputLabel></div><h:inputText size="40" id="lastName" value="#{alterUser.lastName}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="password">staré heslo:</h:outputLabel></div><h:inputSecret size="40" id="password" value="#{alterUser.oldPass}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="password">nové heslo:</h:outputLabel></div><h:inputSecret size="40" id="password1" value="#{alterUser.newPass}"/> <br/>
+                    <div class="table_label"><h:outputLabel for="password2">heslo znovu:</h:outputLabel></div><h:inputSecret size="40" id="password2" value="#{alterUser.newPass2}"/> <br/>
+                    <p>Všechny údaje jsou povinné.</p>
+                    <h:dataTable rendered="#{alterUser.permitedToChangeCompetencies}" value="#{alterUser.competencies}" var="competency" 
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header">
+                                Vyber
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{competency.selected}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                ID
+                            </f:facet>
+                            #{competency.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Jméno
+                            </f:facet>
+                            #{competency.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Popis
+                            </f:facet>
+                            #{competency.description}
+                        </h:column>
+
+                    </h:dataTable>
+                    <h:link rendered="#{alterUser.manager}" class="a_button" value="Seznam řízení" outcome="/UserManagement/ManagementList.xhtml">
+                        <f:param name="id" value="#{param.id}"/>
+                    </h:link><br/>
+                    <h:commandButton onclick="return confirm('Opravdu chcete uložit změny?')" id="registerButton" class="a_button" value="Uložit" action="#{alterUser.save()}"><f:param id="id" value="#{param.id}"/></h:commandButton> 
+                    <h:commandButton id="backButton" class="a_button" value="Zpět" action="/index.xhtml?faces-redirect=true"/> 
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+
